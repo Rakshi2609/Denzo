@@ -22,8 +22,11 @@ export const taskService = {
   // Update task status
   updateTaskStatus: (id, status) => api.patch(`/tasks/${id}/status`, { status }),
   
+  // Complete task with time tracking
+  completeTask: (payload) => api.patch('/tasks/complete', payload),
+  
   // Delete task
-  deleteTask: (id) => api.delete(`/tasks/${id}`),
+  deleteTask: (payload) => api.delete('/tasks/delete', { data: payload }),
   
   // Get task updates/comments
   getTaskUpdates: (taskId) => api.get(`/tasks/${taskId}/updates`),

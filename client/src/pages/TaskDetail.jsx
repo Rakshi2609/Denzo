@@ -241,6 +241,34 @@ export default function TaskDetail() {
               <p className="text-gray-800 font-medium">{moment(task.createdAt).format('MMM DD, YYYY')}</p>
             </div>
           </div>
+
+          {/* Show actual time tracking if task is completed */}
+          {task.status === 'Completed' && (task.actualStartTime || task.actualEndTime) && (
+            <>
+              {task.actualStartTime && (
+                <div className="flex items-center gap-3">
+                  <FiClock className="text-blue-500" size={20} />
+                  <div>
+                    <p className="text-sm text-gray-500">Work Started</p>
+                    <p className="text-gray-800 font-medium">
+                      {moment(task.actualStartTime).format('MMM DD, YYYY h:mm A')}
+                    </p>
+                  </div>
+                </div>
+              )}
+              {task.actualEndTime && (
+                <div className="flex items-center gap-3">
+                  <FiClock className="text-green-500" size={20} />
+                  <div>
+                    <p className="text-sm text-gray-500">Work Finished</p>
+                    <p className="text-gray-800 font-medium">
+                      {moment(task.actualEndTime).format('MMM DD, YYYY h:mm A')}
+                    </p>
+                  </div>
+                </div>
+              )}
+            </>
+          )}
         </div>
 
         {/* Description */}

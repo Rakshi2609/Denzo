@@ -210,3 +210,82 @@ export const addComment = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+export const completeTask = async (req, res) => {
+  try {
+    const { taskId, actualStartTime, actualEndTime } = req.body;
+
+    const task = await Task.findById(taskId);
+
+    if (!task) {
+      return res.status(404).json({ error: 'Task not found' });
+    }
+
+    // Check if user is assigned to this task
+    if (task.assignedTo.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ error: 'You can only complete tasks assigned to you' });
+    }
+
+    const oldStatus = task.status;
+    task.status = 'Completed';
+    task.completedAt = new Date();
+    
+    if (actualStartTime) {
+      task.actualStartTime = new Date(actualStartTime);
+    }
+    
+    if (actualEndTime) {
+      task.actualEndTime = new Date(actualEndTime);
+    } else {
+      // If no end time provided, set to now
+      task.actualEndTime = new Date();
+    }
+
+    await task.save();
+
+    await TaskUpdate.create({
+      taskId: task._id,
+      userId: req.user._id,
+      type: 'StatusChange',
+      oldValue: oldStatus,
+      newValue: 'Completed'
+    });
+
+    const populatedTask = await Task.findById(task._id)
+      .populate('assignedTo', 'displayName email')
+      .populate('createdBy', 'displayName email');
+
+    res.json(populatedTask);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+export const deleteTaskByBody = async (req, res) => {
+  try {
+    const { taskId } = req.body;
+    
+    const task = await Task.findById(taskId);
+
+    if (!task) {
+      return res.status(404).json({ error: 'Task not found' });
+    }
+
+    // Check permissions: only creator or assignee can delete
+    const isCreator = task.createdBy.toString() === req.user._id.toString();
+    const isAssignee = task.assignedTo.toString() === req.user._id.toString();
+
+    if (!isCreator && !isAssignee) {
+      return res.status(403).json({ error: 'You do not have permission to delete this task' });
+    }
+
+    await Task.findByIdAndDelete(taskId);
+
+    // Delete associated updates
+    await TaskUpdate.deleteMany({ taskId });
+
+    res.json({ message: 'Task deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
