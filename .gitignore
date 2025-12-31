@@ -32,5 +32,10 @@ Thumbs.db
 firebase-debug.log
 firestore-debug.log
 
+# Firebase Service Account Credentials (NEVER COMMIT THESE!)
+*firebase-adminsdk*.json
+serviceAccount.json
+tasktapper-firebase-adminsdk*.json
+
 # Agenda jobs
 agendaJobs/
