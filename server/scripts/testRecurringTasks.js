@@ -56,13 +56,14 @@ async function testRecurringTasks() {
     await mongoose.connect(process.env.MONGODB_URI);
     console.log('✅ Connected to MongoDB\n');
 
-    // Find first user
-    const user = await User.findOne();
-    if (!user) {
-      console.error('❌ No users found in database');
+    // Fetch two users
+    const users = await User.find().limit(2);
+    if (users.length < 2) {
+      console.error('❌ Need at least 2 users in database');
       process.exit(1);
     }
-    console.log(`👤 Using user: ${user.displayName || user.email} (${user._id})\n`);
+    const [userA, userB] = users;
+    console.log(`👤 Using users: ${userA.displayName || userA.email} (${userA._id}), ${userB.displayName || userB.email} (${userB._id})\n`);
 
     // Clean up old test recurring tasks
     console.log('🧹 Cleaning up old test recurring tasks...');
@@ -74,9 +75,9 @@ async function testRecurringTasks() {
     });
     console.log('✅ Cleanup complete\n');
 
-    // Create test recurring tasks
+    // Create test recurring tasks, alternating assignment
     console.log('📝 Creating test recurring tasks...\n');
-    
+
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
@@ -86,8 +87,8 @@ async function testRecurringTasks() {
         description: 'This task should be generated daily',
         frequency: 'Daily',
         startDate: today,
-        assignedTo: user._id,
-        createdBy: user._id,
+        assignedTo: userB._id,
+        createdBy: userA._id,
         isActive: true,
         taskTemplate: {
           priority: 'High',
@@ -101,8 +102,8 @@ async function testRecurringTasks() {
         description: 'This task should be generated weekly',
         frequency: 'Weekly',
         startDate: today,
-        assignedTo: user._id,
-        createdBy: user._id,
+        assignedTo: userA._id,
+        createdBy: userB._id,
         isActive: true,
         taskTemplate: {
           priority: 'Medium',
@@ -116,8 +117,8 @@ async function testRecurringTasks() {
         description: 'This task should be generated monthly',
         frequency: 'Monthly',
         startDate: today,
-        assignedTo: user._id,
-        createdBy: user._id,
+        assignedTo: userB._id,
+        createdBy: userA._id,
         isActive: true,
         taskTemplate: {
           priority: 'Low',
@@ -137,8 +138,8 @@ async function testRecurringTasks() {
     const allRecurringTasks = await RecurringTask.find({ isActive: true });
     console.log(`   Total active recurring tasks: ${allRecurringTasks.length}`);
     
-    const userTasks = await Task.find({ assignedTo: user._id });
-    console.log(`   Total tasks for user: ${userTasks.length}`);
+    const userTasks = await Task.find({ assignedTo: { $in: [userA._id, userB._id] } });
+    console.log(`   Total tasks for users: ${userTasks.length}`);
     console.log(`   Tasks with recurringTaskId: ${userTasks.filter(t => t.recurringTaskId).length}\n`);
 
     // Now manually trigger the generation job
@@ -222,8 +223,8 @@ async function testRecurringTasks() {
 
     // Verify results
     console.log('🔍 Verification:');
-    const finalUserTasks = await Task.find({ assignedTo: user._id }).populate('recurringTaskId');
-    console.log(`   Total tasks for user: ${finalUserTasks.length}`);
+    const finalUserTasks = await Task.find({ assignedTo: { $in: [userA._id, userB._id] } }).populate('recurringTaskId');
+    console.log(`   Total tasks for users: ${finalUserTasks.length}`);
     
     const recurringGenerated = finalUserTasks.filter(t => t.recurringTaskId);
     console.log(`   Recurring-generated tasks: ${recurringGenerated.length}\n`);

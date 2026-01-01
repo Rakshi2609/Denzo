@@ -4,8 +4,7 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
 import connectDB from './src/config/database.js';
-import { initAgenda } from './src/config/agenda.js';
-import { defineAgendaJobs } from './src/services/agendaJobs.js';
+import { startAgenda } from './src/services/agendaJobs.js';
 import routes from './src/routes/index.js';
 import { errorHandler } from './src/middleware/errorHandler.js';
 
@@ -51,13 +50,7 @@ const startServer = async () => {
 
     // Initialize Agenda in background
     console.log('📅 Initializing Agenda scheduler...');
-    const agenda = initAgenda();
-    defineAgendaJobs(agenda);
-    agenda.start().then(() => {
-      console.log('✅ Agenda scheduler started');
-    }).catch(err => {
-      console.error('❌ Agenda start error:', err);
-    });
+    await startAgenda();
 
   } catch (error) {
     console.error('❌ Failed to start server:', error);
