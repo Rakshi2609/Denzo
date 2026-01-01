@@ -22,14 +22,45 @@ const __dirname = path.dirname(__filename);
 // Middleware
 app.use(helmet({
   contentSecurityPolicy: {
+    useDefaults: false,
     directives: {
       defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", "'unsafe-inline'", "https://apis.google.com", "https://accounts.google.com"],
-      frameSrc: ["'self'", "https://accounts.google.com", "https://tasktapper.firebaseapp.com"],
-      connectSrc: ["'self'", "https://identitytoolkit.googleapis.com", "https://securetoken.googleapis.com"],
-      styleSrc: ["'self'", "'unsafe-inline'"],
-    },
-  },
+      scriptSrc: [
+        "'self'",
+        "'unsafe-inline'",
+        "https://apis.google.com",
+        "https://accounts.google.com",
+        "https://www.gstatic.com"
+      ],
+      frameSrc: [
+        "'self'",
+        "https://accounts.google.com",
+        "https://*.firebaseapp.com",
+        "https://*.web.app"
+      ],
+      connectSrc: [
+        "'self'",
+        "https://identitytoolkit.googleapis.com",
+        "https://securetoken.googleapis.com",
+        "https://www.googleapis.com",
+        "https://firebase.googleapis.com"
+      ],
+      imgSrc: [
+        "'self'",
+        "data:",
+        "blob:",
+        "https://lh3.googleusercontent.com"
+      ],
+      styleSrc: [
+        "'self'",
+        "'unsafe-inline'"
+      ],
+      fontSrc: [
+        "'self'",
+        "https://fonts.gstatic.com"
+      ]
+    }
+  }
 }));
 app.use(cors({
   origin: process.env.CORS_ORIGIN || 'http://localhost:5173',
