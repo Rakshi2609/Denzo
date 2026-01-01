@@ -567,7 +567,7 @@ const Dashboard = () => {
           <div className="mt-2 sm:mt-3 grid grid-cols-2 lg:grid-cols-4 gap-1.5 sm:gap-2">
             <Link to="/my-tasks">
               <motion.button
-                className="w-full bg-white border border-blue-200 text-blue-700 px-1.5 sm:px-2 py-1 rounded-md text-[10px] sm:text-xs font-semibold hover:bg-blue-50"
+                className="w-full bg-white border border-green-200 text-blue-700 px-2 sm:px-3 py-2 rounded-lg text-xs sm:text-sm font-semibold hover:bg-blue-50"
                 variants={linkButtonVariants}
                 whileHover="hover"
                 whileTap="tap"
@@ -582,7 +582,7 @@ const Dashboard = () => {
                 whileHover="hover"
                 whileTap="tap"
               >
-                Recurring Tasks
+                Recurring Reminders
               </motion.button>
             </Link>
             <Link to="/follow-ups">
