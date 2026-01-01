@@ -15,6 +15,7 @@
     "axios": "^1.13.2",
     "canvas-confetti": "^1.9.4",
     "date-fns": "^4.1.0",
+    "denzo-monorepo": "file:..",
     "firebase": "^12.7.0",
     "framer-motion": "^12.23.26",
     "moment": "^2.30.1",
