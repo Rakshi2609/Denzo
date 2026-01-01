@@ -1,0 +1,32 @@
+# Render deploy configuration for Denzo (MERN + Firebase)
+# Docs: https://render.com/docs/yaml-spec
+
+services:
+  - type: web
+    name: denzo-backend
+    env: node
+    plan: free
+    buildCommand: cd server && npm install
+    startCommand: cd server && npm run dev
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5000
+      # Add all other secrets (MONGODB_URI, FIREBASE_*, etc) in Render dashboard for security
+    autoDeploy: true
+    rootDir: server
+    healthCheckPath: /api/health
+
+  - type: web
+    name: denzo-frontend
+    env: static
+    buildCommand: cd client && npm install && npm run build
+    staticPublishPath: client/dist
+    autoDeploy: true
+    rootDir: client
+
+# Notes:
+# - Set all sensitive env vars (MongoDB URI, Firebase keys) in the Render dashboard, not here.
+# - Update healthCheckPath if your backend exposes a different endpoint.
+# - Make sure your frontend API calls use the backend's Render URL.
