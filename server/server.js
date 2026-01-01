@@ -55,8 +55,10 @@ app.use(helmet({
       fontSrc: ["'self'", "https://fonts.gstatic.com"]
     }
   },
-  // Add this to allow the popup to communicate back to your app
-  crossOriginOpenerPolicy: { policy: "same-origin-allow-popups" }
+  // Add this to allow the popup to communicate back to your appcrossOriginOpenerPolicy: { policy: "same-origin-allow-popups" },
+  crossOriginResourcePolicy: { policy: "same-origin-allow-popups" },
+  // crossOriginOpenerPolicy: { policy: "same-origin-allow-cross-origin" },
+  crossOriginEmbedderPolicy: false,
 }));
 app.use(cors({
   origin: process.env.CORS_ORIGIN || 'http://localhost:5173',
