@@ -32,15 +32,12 @@ app.use(helmet({
         "https://accounts.google.com",
         "https://www.gstatic.com"
       ],
-      frameAncestors: [
-        "'self'",
-        "https://accounts.google.com"
-      ],
+      frameAncestors: ["'self'"], 
       frameSrc: [
         "'self'",
         "https://accounts.google.com",
-        "https://*.firebaseapp.com",
-        "https://*.web.app"
+        "https://tasktapper.firebaseapp.com", // Specific domain
+        "https://tasktapper.web.app"          // Specific domain
       ],
       connectSrc: [
         "'self'",
@@ -52,19 +49,14 @@ app.use(helmet({
       imgSrc: [
         "'self'",
         "data:",
-        "blob:",
         "https://lh3.googleusercontent.com"
       ],
-      styleSrc: [
-        "'self'",
-        "'unsafe-inline'"
-      ],
-      fontSrc: [
-        "'self'",
-        "https://fonts.gstatic.com"
-      ]
+      styleSrc: ["'self'", "'unsafe-inline'"],
+      fontSrc: ["'self'", "https://fonts.gstatic.com"]
     }
-  }
+  },
+  // Add this to allow the popup to communicate back to your app
+  crossOriginOpenerPolicy: { policy: "same-origin-allow-popups" }
 }));
 app.use(cors({
   origin: process.env.CORS_ORIGIN || 'http://localhost:5173',
