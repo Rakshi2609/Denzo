@@ -42,11 +42,9 @@ app.use('/api', routes);
 app.use(express.static(path.join(__dirname, '../client/dist')));
 
 // For any route not starting with /api, serve index.html (for React Router)
-app.get('*', (req, res, next) => {
+app.get('/*', (req, res) => {
   if (!req.path.startsWith('/api')) {
     res.sendFile(path.join(__dirname, '../client/dist/index.html'));
-  } else {
-    next();
   }
 });
 
