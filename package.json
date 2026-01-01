@@ -1,0 +1,17 @@
+{
+  "name": "denzo-monorepo",
+  "version": "1.0.0",
+  "description": "Denzo MERN + Firebase monorepo",
+  "main": "server/server.js",
+  "scripts": {
+    "build": "npm install --prefix client && npm run build --prefix client",
+    "start": "NODE_ENV=production node server/server.js",
+    "dev": "concurrently \"npm run dev --prefix server\" \"npm run dev --prefix client\""
+  },
+  "keywords": ["mern", "firebase", "denzo"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
