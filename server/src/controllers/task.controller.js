@@ -289,3 +289,47 @@ export const deleteTaskByBody = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+export const toggleReaction = async (req, res) => {
+  try {
+    const { taskId, updateId } = req.params;
+    const { emoji } = req.body;
+    const userId = req.user._id.toString();
+
+    const update = await TaskUpdate.findOne({ _id: updateId, taskId });
+
+    if (!update) {
+      return res.status(404).json({ error: 'Comment not found' });
+    }
+
+    // Initialize reactions if not exists
+    if (!update.reactions) {
+      update.reactions = new Map();
+    }
+
+    // Get current users who reacted with this emoji
+    const currentReactors = update.reactions.get(emoji) || [];
+
+    // Toggle: if user already reacted, remove; otherwise add
+    if (currentReactors.includes(userId)) {
+      const filtered = currentReactors.filter(id => id !== userId);
+      if (filtered.length === 0) {
+        update.reactions.delete(emoji);
+      } else {
+        update.reactions.set(emoji, filtered);
+      }
+    } else {
+      currentReactors.push(userId);
+      update.reactions.set(emoji, currentReactors);
+    }
+
+    await update.save();
+
+    res.json({ 
+      message: 'Reaction updated', 
+      reactions: Object.fromEntries(update.reactions) 
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};

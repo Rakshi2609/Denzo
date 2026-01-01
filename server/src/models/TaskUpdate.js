@@ -19,7 +19,12 @@ const taskUpdateSchema = new mongoose.Schema({
   },
   content: String,
   oldValue: String,
-  newValue: String
+  newValue: String,
+  reactions: {
+    type: Map,
+    of: [String],
+    default: new Map()
+  }
 }, {
   timestamps: true
 });

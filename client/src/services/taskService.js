@@ -33,6 +33,9 @@ export const taskService = {
   
   // Add comment
   addComment: (taskId, content) => api.post(`/tasks/${taskId}/updates`, { content }),
+  
+  // Toggle reaction on comment
+  toggleReaction: (taskId, updateId, emoji) => api.post(`/tasks/${taskId}/updates/${updateId}/react`, { emoji }),
 };
 
 export const recurringTaskService = {

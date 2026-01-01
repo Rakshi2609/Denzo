@@ -10,6 +10,9 @@ import FollowUps from './pages/FollowUps';
 import RecurringTasks from './pages/RecurringTasks';
 import AdminPanel from './pages/AdminPanel';
 import TaskDetail from './pages/TaskDetail';
+import CreateTask from './pages/CreateTask';
+import EditTask from './pages/EditTask';
+import CreateRecurringTask from './pages/CreateRecurringTask';
 
 function App() {
   return (
@@ -27,7 +30,10 @@ function App() {
                     <Route path="/dashboard" element={<Dashboard />} />
                     <Route path="/my-tasks" element={<MyTasks />} />
                     <Route path="/follow-ups" element={<FollowUps />} />
+                    <Route path="/create-task" element={<CreateTask />} />
+                    <Route path="/edit-task/:id" element={<EditTask />} />
                     <Route path="/recurring-tasks" element={<RecurringTasks />} />
+                    <Route path="/create-recurring-task" element={<CreateRecurringTask />} />
                     <Route path="/tasks/:id" element={<TaskDetail />} />
                     <Route path="/admin" element={<AdminPanel />} />
                     <Route path="/" element={<Navigate to="/dashboard" replace />} />
