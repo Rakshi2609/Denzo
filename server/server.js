@@ -32,6 +32,10 @@ app.use(helmet({
         "https://accounts.google.com",
         "https://www.gstatic.com"
       ],
+      frameAncestors: [
+        "'self'",
+        "https://accounts.google.com"
+      ],
       frameSrc: [
         "'self'",
         "https://accounts.google.com",
