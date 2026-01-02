@@ -301,7 +301,7 @@ const Dashboard = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 sm:gap-3 mb-3 sm:mb-4 relative z-10">
           {/* Today's Due Tasks Section */}
           <motion.div
-            className="p-2 sm:p-3 bg-blue-50 rounded-lg shadow-md border border-blue-100"
+            className="p-2 sm:p-3 bg-white rounded-lg shadow-md border border-gray-200"
             variants={itemVariants}
           >
             <h3 className="text-sm sm:text-base font-bold mb-2 text-blue-800 flex items-center justify-between gap-2">
@@ -320,7 +320,7 @@ const Dashboard = () => {
                   {(showAllToday ? todayTasks : todayTasks.slice(0, 3)).map((task, index) => (
                   <motion.li
                     key={task._id || index}
-                    className="border border-blue-200 p-1.5 sm:p-2 rounded-md shadow-sm bg-white hover:shadow-md transition-shadow duration-200 cursor-pointer"
+                    className="border border-gray-200 p-1.5 sm:p-2 rounded-md shadow-sm bg-white hover:shadow-md transition-shadow duration-200 cursor-pointer"
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.3, delay: index * 0.05 }}
@@ -330,39 +330,33 @@ const Dashboard = () => {
                     <p className="text-xs sm:text-sm font-semibold text-gray-800 mb-0.5">
                       {task.title}
                     </p>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-0.5 text-[10px] sm:text-xs text-gray-600">
+                    <div className="grid grid-cols-2 gap-y-0.5 text-[10px] sm:text-xs text-gray-600">
+                      <p>
+                        <strong>By:</strong>{" "}
+                        <span className="font-medium text-blue-700">
+                          {task.createdBy && typeof task.createdBy === 'object'
+                            ? (task.createdBy.displayName || task.createdBy.email || 'Unknown')
+                            : (task.createdBy || 'Unknown')}
+                        </span>
+                      </p>
+                      <p>
+                        <strong>Status:</strong>{" "}
+                        <span className={`font-medium ${task.status === 'Completed' ? 'text-green-600' : task.status === 'In Progress' ? 'text-yellow-600' : 'text-gray-600'}`}>
+                          {task.status || 'Pending'}
+                        </span>
+                      </p>
                       <p>
                         <strong>Due:</strong>{" "}
                         {new Date(task.dueDate).toLocaleDateString()}
                       </p>
                       <p>
                         <strong>Priority:</strong>{" "}
-                        <span
-                          className={`font-medium ${
-                            task.priority === "High" || task.priority === "Urgent"
-                              ? "text-red-500"
-                              : task.priority === "Medium"
-                              ? "text-yellow-600"
-                              : "text-green-600"
-                          }`}
-                        >
+                        <span className={`font-medium ${task.priority === 'High' || task.priority === 'Urgent' ? 'text-red-500' : task.priority === 'Medium' ? 'text-yellow-600' : 'text-green-600'}`}>
                           {task.priority}
                         </span>
                       </p>
-                      <p>
-                        <strong>Status:</strong> {task.status || 'Pending'}
-                      </p>
-                      {task.createdBy && (
-                        <p className="col-span-1">
-                          <strong>Assigned By:</strong>{" "}
-                          <span className="font-medium text-blue-700">
-                            {typeof task.createdBy === 'object' 
-                              ? (task.createdBy.displayName || task.createdBy.email || 'Unknown')
-                              : 'Unknown'}
-                          </span>
-                        </p>
-                      )}
                     </div>
+                    
                   </motion.li>
                 ))}
                 </ul>
@@ -380,7 +374,7 @@ const Dashboard = () => {
 
           {/* Overdue Tasks Section */}
           <motion.div
-            className="p-2 sm:p-3 bg-red-50 rounded-lg shadow-md border border-red-100"
+            className="p-2 sm:p-3 bg-white rounded-lg shadow-md border border-gray-200"
             variants={itemVariants}
           >
             <h3 className="text-sm sm:text-base font-bold mb-2 text-red-700 flex items-center justify-between gap-2">
@@ -399,7 +393,7 @@ const Dashboard = () => {
                   {(showAllOverdue ? overdueTasks : overdueTasks.slice(0, 3)).map((task, index) => (
                   <motion.li
                     key={task._id || index}
-                    className="border border-red-200 p-1.5 sm:p-2 rounded-md shadow-sm bg-white hover:shadow-md transition-shadow duration-200 cursor-pointer"
+                    className="border border-gray-200 p-1.5 sm:p-2 rounded-md shadow-sm bg-white hover:shadow-md transition-shadow duration-200 cursor-pointer"
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.3, delay: index * 0.05 }}
@@ -409,40 +403,31 @@ const Dashboard = () => {
                     <p className="text-xs sm:text-sm font-semibold text-gray-800 mb-0.5">
                       {task.title}
                     </p>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-0.5 text-[10px] sm:text-xs text-gray-600">
+                    <div className="grid grid-cols-2 gap-y-0.5 text-[10px] sm:text-xs text-gray-600">
+                      <p>
+                        <strong>By:</strong>{" "}
+                        <span className="font-medium text-blue-700">
+                          {task.createdBy && typeof task.createdBy === 'object'
+                            ? (task.createdBy.displayName || task.createdBy.email || 'Unknown')
+                            : (task.createdBy || 'Unknown')}
+                        </span>
+                      </p>
+                      <p>
+                        <strong>Status:</strong>{" "}
+                        <span className={`font-medium ${task.status === 'Completed' ? 'text-green-600' : task.status === 'In Progress' ? 'text-yellow-600' : 'text-gray-600'}`}>
+                          {task.status || 'Pending'}
+                        </span>
+                      </p>
                       <p>
                         <strong>Due:</strong>{" "}
-                        <span className="text-red-500">
-                          {new Date(task.dueDate).toLocaleDateString()}
-                        </span>
+                        <span className="text-red-500">{new Date(task.dueDate).toLocaleDateString()}</span>
                       </p>
                       <p>
                         <strong>Priority:</strong>{" "}
-                        <span
-                          className={`font-medium ${
-                            task.priority === "High" || task.priority === "Urgent"
-                              ? "text-red-500"
-                              : task.priority === "Medium"
-                              ? "text-yellow-600"
-                              : "text-green-600"
-                          }`}
-                        >
+                        <span className={`font-medium ${task.priority === 'High' || task.priority === 'Urgent' ? 'text-red-500' : task.priority === 'Medium' ? 'text-yellow-600' : 'text-green-600'}`}>
                           {task.priority}
                         </span>
                       </p>
-                      <p>
-                        <strong>Status:</strong> {task.status || 'Pending'}
-                      </p>
-                      {task.createdBy && (
-                        <p className="col-span-1">
-                          <strong>Assigned By:</strong>{" "}
-                          <span className="font-medium text-blue-700">
-                            {typeof task.createdBy === 'object' 
-                              ? (task.createdBy.displayName || task.createdBy.email || 'Unknown')
-                              : 'Unknown'}
-                          </span>
-                        </p>
-                      )}
                     </div>
                   </motion.li>
                 ))}
@@ -612,7 +597,7 @@ const Dashboard = () => {
 
         {/* FOLLOWUPS - TASKS ASSIGNED BY ME */}
         <motion.div
-          className="mb-3 sm:mb-4 p-2 sm:p-3 bg-orange-50 rounded-lg shadow-md border border-orange-100 relative z-10"
+          className="mb-3 sm:mb-4 p-3 sm:p-4 bg-gradient-to-r from-orange-50 to-orange-100 rounded-xl shadow-2xl border border-orange-300 relative z-10 transform hover:-translate-y-1 transition-transform duration-200"
           variants={itemVariants}
         >
           <h3 className="text-sm sm:text-base font-bold mb-2 text-orange-800 flex items-center justify-between gap-2">
@@ -631,7 +616,7 @@ const Dashboard = () => {
                 {(showAllFollowups ? assignedByMeTasks : assignedByMeTasks.slice(0, 3)).map((task, index) => (
                 <motion.li
                   key={task._id || index}
-                  className="border border-orange-200 p-1.5 sm:p-2 rounded-md shadow-sm bg-white hover:shadow-md transition-shadow duration-200 cursor-pointer"
+                  className="border border-orange-200 p-2 sm:p-3 rounded-lg shadow-md bg-white hover:shadow-lg transition-shadow duration-200 cursor-pointer"
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.3, delay: index * 0.05 }}
@@ -643,7 +628,7 @@ const Dashboard = () => {
                   </p>
                   <div className="grid grid-cols-2 gap-y-0.5 text-[10px] sm:text-xs text-gray-600">
                     <p>
-                      <strong>Assigned To:</strong> {typeof task.assignedTo === 'object' 
+                      <strong>To:</strong> {typeof task.assignedTo === 'object' 
                         ? (task.assignedTo?.displayName || task.assignedTo?.email || 'Unknown')
                         : 'Unknown'}
                     </p>

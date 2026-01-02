@@ -302,7 +302,7 @@ export default function EditTask() {
                   </>
                 ) : (
                   <>
-                    <FaSave />
+                    {/* <FaSave /> */}
                     <span>Update Task</span>
                   </>
                 )}

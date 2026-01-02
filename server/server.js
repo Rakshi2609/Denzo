@@ -6,9 +6,10 @@ import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import connectDB from './src/config/database.js';
-import { startAgenda } from './src/services/agendaJobs.js';
+// import { startAgenda } from './src/services/agendaJobs.js';
 import routes from './src/routes/index.js';
 import { errorHandler } from './src/middleware/errorHandler.js';
+import cornRoutes from './src/routes/corn.route.js';
 
 dotenv.config();
 
@@ -48,6 +49,7 @@ app.get('/health', (req, res) => {
 });
 
 app.use('/api', routes);
+app.use('/cron', cornRoutes);
 
 // Serve static files from the client build folder
 // Note: Adjusted path assuming your folder structure is /server/app.js and /client/dist
@@ -75,7 +77,7 @@ const startServer = async () => {
       console.log(`📡 API: http://localhost:${PORT}/api`);
     });
 
-    await startAgenda();
+    // await startAgenda();
   } catch (error) {
     console.error('❌ Failed to start server:', error);
     process.exit(1);
