@@ -240,8 +240,8 @@ export default function CreateTask() {
                   </>
                 ) : (
                   <>
-                    <FaSave />
-                    Create Task
+                    {/* <FaSave /> */}
+                    Create
                   </>
                 )}
               </motion.button>
