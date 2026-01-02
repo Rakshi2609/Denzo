@@ -306,8 +306,8 @@ export default function CreateRecurringTask() {
                   </>
                 ) : (
                   <>
-                    <FaSave />
-                    Create Recurring Reminder
+                    {/* <FaSave /> */}
+                    Create
                   </>
                 )}
               </motion.button>
