@@ -45,7 +45,7 @@ const SideNavbar = ({ isOpen, onClose }) => {
         {
           title: "Tasks",
           links: [
-            { to: "/my-tasks", label: "My Tasks", icon: <FaClipboardList /> },
+            { to: "/my-tasks", label: "Tasks", icon: <FaClipboardList /> },
             { to: "/follow-ups", label: "Follow Ups", icon: <FaTasks /> },
             { to: "/create-task", label: "Create Task", icon: <FaPlus /> },
             { to: "/recurring-tasks", label: "Recurring Reminders", icon: <FaSyncAlt /> },
