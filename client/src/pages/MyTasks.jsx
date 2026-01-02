@@ -292,7 +292,7 @@ export default function MyTasks() {
 
                 <motion.div className="flex items-center justify-center gap-3 mb-6" variants={itemVariants}>
                     <h2 className="text-2xl sm:text-3xl font-extrabold text-center text-gray-900 drop-shadow-md flex items-center gap-2">
-                        <FaTasks className="text-blue-600 text-2xl sm:text-3xl" /> My Tasks
+                        <FaTasks className="text-blue-600 text-2xl sm:text-3xl" /> Tasks
                     </h2>
                     <button
                         onClick={() => setShowFilters(!showFilters)}
