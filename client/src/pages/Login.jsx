@@ -60,7 +60,7 @@ export default function Login() {
             >
               <FaTasks className="text-white text-4xl drop-shadow" />
             </motion.div>
-            <h1 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-1 drop-shadow-md tracking-tight">TaskTapper</h1>
+            <h1 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-1 drop-shadow-md tracking-tight">Denzo</h1>
             <p className="text-gray-600 text-base font-medium">Sign in to manage your tasks</p>
           </div>
 
